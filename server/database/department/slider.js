@@ -2,12 +2,10 @@ import mongoose from "mongoose";
 
 const SliderSchema = new mongoose.Schema(
     {
-        "slider": [
-            {
-                type: String
-            }
-        ]
+        imageType : { type: String },
+        image: { type: String },
+        status: { type: String }
     }
 );
 
-export const SliderModel = mongoose.model("faculty", SliderSchema);
+export const SliderModel = mongoose.model("slider", SliderSchema);

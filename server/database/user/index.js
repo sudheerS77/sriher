@@ -3,27 +3,32 @@ import bcrypt, { hash } from "bcryptjs";
 import jwt from "jsonwebtoken";
 const UserSchema = new mongoose.Schema(
     {
-        fullname: { type: String},
-        email: { type: String, required: true },
+        fullName: { type: String},
+        institution: { type: String},
+        stateDentalCode: { type: String},
+        state: { type: String},
+        phoneNumber: [{ type: Number }], 
+        typeOfRegistration: { type: String},  
         password: { type: String },
-        address: [{ detail: { type: String }, for: { type: String } }],
-        phoneNumber: [{ type: Number }],   
+        address: [{ type: String} ],
+        //{ detail: { type: String }, for: { type: String } }
+        email: { type: String, required: true },
+        userRole: { type: String, default: "user" },
+        status: { type: String, default: "Active" }
     },
     {
         timestamps: true,
     }
 );
 UserSchema.methods.generateJwtToken = function() {
-    return jwt.sign({ user: this._id.toString() }, "AUTH");
+    return jwt.sign({ user: this._id.toString() }, "SRIAUTHAPP");
 }
 
 UserSchema.statics.findUserByEmailAndPhone = async ({ email, phoneNumber }) => {
     const checkUserByEmail = await UserModel.findOne({ email });
-    const checkUserByPhone = await UserModel.findOne({ phoneNumber });
-    console.log(checkUserByEmail);
-    console.log(checkUserByPhone);
+    const checkUserByPhone = await UserModel.findOne({ phoneNumber });    
 
-    if(checkUserByEmail || checkUserByPhone) throw Error("User already exist");
+    if(checkUserByEmail || checkUserByPhone) throw Error("User already exist with email or phone number");
 
     return false
 }

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const FacultySchema = new mongoose.Schema(
+const FacultyFeedbackSchema = new mongoose.Schema(
     {
         name: { type: String },
         degree: { type: String },
@@ -8,9 +8,10 @@ const FacultySchema = new mongoose.Schema(
         image: [
             { type: String }
         ],
-        status: { type: String },
-
+        feedback_status: { type: String },
+          
     }
 );
 
-export const FacultyModel = mongoose.model("faculty", FacultySchema);
+
+export const FacultyFeedbackModel = mongoose.model("facultyFeedback", FacultyFeedbackSchema);
